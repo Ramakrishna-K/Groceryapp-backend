@@ -22,7 +22,7 @@ await connectCloudinary();
 // src/server.js or index.js
 const allowedOrigins = [
   "http://localhost:5173", // local dev
-  "https://groceryapp-frontend-rosy.vercel.app" // deployed frontend
+  "https://groceryapp-frontend-9cd3.vercel.app/" // deployed frontend
 ];
 
 app.use(
