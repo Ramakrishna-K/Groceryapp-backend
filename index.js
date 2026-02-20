@@ -21,21 +21,38 @@ await connectCloudinary();
 
 // src/server.js or index.js
 const allowedOrigins = [
+  "https://groceryapp-frontend-9cd3.vercel.app/"
   "http://localhost:5173", // local dev
-  "https://groceryapp-frontend-9cd3.vercel.app/" // deployed frontend
 ];
 
+
+// ✅ Proper CORS setup
 app.use(
   cors({
-    origin: (origin, callback) => {
-      // allow requests with no origin (like Postman)
-      if (!origin) return callback(null, true);
-      if (allowedOrigins.includes(origin)) return callback(null, true);
-      callback(new Error("Not allowed by CORS"));
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        console.log("❌ Blocked by CORS:", origin);
+        callback(new Error("Not allowed by CORS"));
+      }
     },
-    credentials: true, // allow cookies
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
   })
 );
+// app.use(
+//   cors({
+//     origin: (origin, callback) => {
+//       // allow requests with no origin (like Postman)
+//       if (!origin) return callback(null, true);
+//       if (allowedOrigins.includes(origin)) return callback(null, true);
+//       callback(new Error("Not allowed by CORS"));
+//     },
+//     credentials: true, // allow cookies
+//   })
+// );
 
 //middlewares
 app.use(cors({ origin: allowedOrigins, credentials: true }));
