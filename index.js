@@ -26,33 +26,18 @@ const allowedOrigins = [
 ];
 
 
-// ✅ Proper CORS setup
+
 app.use(
   cors({
-    origin: function (origin, callback) {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        console.log("❌ Blocked by CORS:", origin);
-        callback(new Error("Not allowed by CORS"));
-      }
+    origin: (origin, callback) => {
+      // allow requests with no origin (like Postman)
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.includes(origin)) return callback(null, true);
+      callback(new Error("Not allowed by CORS"));
     },
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-    credentials: true,
+    credentials: true, // allow cookies
   })
 );
-// app.use(
-//   cors({
-//     origin: (origin, callback) => {
-//       // allow requests with no origin (like Postman)
-//       if (!origin) return callback(null, true);
-//       if (allowedOrigins.includes(origin)) return callback(null, true);
-//       callback(new Error("Not allowed by CORS"));
-//     },
-//     credentials: true, // allow cookies
-//   })
-// );
 
 //middlewares
 app.use(cors({ origin: allowedOrigins, credentials: true }));
