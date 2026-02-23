@@ -21,7 +21,7 @@ await connectCloudinary();
 
 // src/server.js or index.js
 const allowedOrigins = [
-  "https://groceryapp-frontend-yxdr.vercel.app/",
+  "https://groceryapp-frontend-yxdr.vercel.app",
   "http://localhost:5173"
 ];
 
