@@ -71,11 +71,11 @@ import { connectDB } from "./config/connectDB.js";
 dotenv.config();
 // import userRoutes from "./routes/userRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
-import sellerRoutes from "./routes/seller.routes.js";
-import productRoutes from "./routes/product.routes.js";
-import cartRoutes from "./routes/cart.routes.js";
-import addressRoutes from "./routes/address.routes.js";
-import orderRoutes from "./routes/order.routes.js";
+import sellerRoutes from "./routes/sellerRoutes.js";
+import productRoutes from "./routes/productRoutes.js";
+import cartRoutes from "./routes/cartRoutes.js";
+import addressRoutes from "./routes/addressRoutes.js";
+import orderRoutes from "./routes/orderRoutes.js";
 
 import { connectCloudinary } from "./config/cloudinary.js";
 
