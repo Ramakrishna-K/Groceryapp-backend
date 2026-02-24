@@ -70,7 +70,7 @@ import dotenv from "dotenv";
 import { connectDB } from "./config/connectDB.js";
 dotenv.config();
 // import userRoutes from "./routes/userRoutes.js";
-import userRoutes from "./routes/user.routes.js";
+import userRoutes from "./routes/userRoutes.js";
 import sellerRoutes from "./routes/seller.routes.js";
 import productRoutes from "./routes/product.routes.js";
 import cartRoutes from "./routes/cart.routes.js";
