@@ -56,61 +56,31 @@
 // };
 
 
-// import jwt from "jsonwebtoken";
-
-// export const authSeller = (req, res, next) => {
-//   try {
-//     const token = req.cookies?.sellerToken;
-
-//     if (!token) {
-//       return res.status(401).json({
-//         success: false,
-//         message: "Unauthorized: Seller not logged in",
-//       });
-//     }
-
-//     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
-//     // ✅ Store ONLY seller ID
-//     req.seller = decoded.id;
-
-//     next();
-//   } catch (error) {
-//     console.error("Seller Auth Error:", error.message);
-//     return res.status(401).json({
-//       success: false,
-//       message: "Unauthorized: Invalid or expired seller token",
-//     });
-//   }
-// };
-
-// middleware/sellerAuth.js
 import jwt from "jsonwebtoken";
 
 export const authSeller = (req, res, next) => {
   try {
     const token = req.cookies?.sellerToken;
 
-    console.log("sellerToken:", token); // 🔴 TEMP DEBUG
-
     if (!token) {
       return res.status(401).json({
         success: false,
-        message: "Seller not authenticated",
+        message: "Unauthorized: Seller not logged in",
       });
     }
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-    // ✅ STORE ONLY ID
+    // ✅ Store ONLY seller ID
     req.seller = decoded.id;
 
     next();
   } catch (error) {
-    console.error("authSeller error:", error.message);
+    console.error("Seller Auth Error:", error.message);
     return res.status(401).json({
       success: false,
-      message: "Invalid or expired seller token",
+      message: "Unauthorized: Invalid or expired seller token",
     });
   }
 };
+
