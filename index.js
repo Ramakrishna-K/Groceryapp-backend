@@ -85,6 +85,21 @@ const app = express();
 app.set('trust proxy', 1);
 await connectCloudinary();
 
+// const allowedOrigins = [
+//   "https://groceryapp-frontend-yxdr.vercel.app",
+//   "http://localhost:5173",
+// ];
+
+// app.use(
+//   cors({
+//     origin: (origin, callback) => {
+//       if (!origin) return callback(null, true);
+//       if (allowedOrigins.includes(origin)) return callback(null, true);
+//       callback(new Error("Not allowed by CORS"));
+//     },
+//     credentials: true,
+//   })
+// );
 const allowedOrigins = [
   "https://groceryapp-frontend-yxdr.vercel.app",
   "http://localhost:5173",
@@ -92,15 +107,21 @@ const allowedOrigins = [
 
 app.use(
   cors({
-    origin: (origin, callback) => {
+    origin: function (origin, callback) {
+      // Allow requests with no origin (like mobile apps or curl)
       if (!origin) return callback(null, true);
-      if (allowedOrigins.includes(origin)) return callback(null, true);
-      callback(new Error("Not allowed by CORS"));
+      
+      if (allowedOrigins.indexOf(origin) !== -1) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
     },
-    credentials: true,
+    credentials: true, // THIS IS ESSENTIAL
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"]
   })
 );
-
 app.use(cookieParser());
 app.use(express.json());
 
