@@ -57,4 +57,47 @@ export const getAddress = async (req, res) => {
 };
 
 
+// import Address from "../models/address.model.js";
+
+// export const addAddress = async (req, res) => {
+//   try {
+//     // ✅ SAME AUTH LOGIC AS getAddress
+//     const userId = req.user?.id || req.user;
+
+//     const { name, phone, city, state, pincode, addressLine } = req.body;
+
+//     if (!userId || !name || !phone || !city || !state || !pincode || !addressLine) {
+//       return res.status(400).json({
+//         success: false,
+//         message: "All fields required",
+//       });
+//     }
+
+//     const newAddress = new Address({
+//       user: userId,
+//       name,
+//       phone,
+//       city,
+//       state,
+//       pincode,
+//       addressLine,
+//     });
+
+//     await newAddress.save();
+
+//     res.status(201).json({
+//       success: true,
+//       message: "Address added successfully",
+//     });
+//   } catch (error) {
+//     console.error("addAddress error:", error.message);
+//     res.status(500).json({
+//       success: false,
+//       message: "Server error",
+//     });
+//   }
+// };
+
+
+
 
