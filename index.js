@@ -125,7 +125,6 @@
 //   console.log(`Server is running on port ${PORT}`);
 // });
 
-
 import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
@@ -134,26 +133,24 @@ import dotenv from "dotenv";
 import { connectDB } from "./config/connectDB.js";
 import { connectCloudinary } from "./config/cloudinary.js";
 
-dotenv.config();
+import userRoutes from "./routes/user.routes.js";
+import sellerRoutes from "./routes/seller.routes.js";
+import productRoutes from "./routes/product.routes.js";
+import cartRoutes from "./routes/cart.routes.js";
+import addressRoutes from "./routes/address.routes.js";
+import orderRoutes from "./routes/order.routes.js";
 
-import userRoutes from "../routes/user.routes.js";
-import sellerRoutes from "../routes/seller.routes.js";
-import productRoutes from "../routes/product.routes.js";
-import cartRoutes from "../routes/cart.routes.js";
-import addressRoutes from "../routes/address.routes.js";
-import orderRoutes from "../routes/order.routes.js";
+dotenv.config();
 
 const app = express();
 
 await connectCloudinary();
 
-// Allowed origins
 const allowedOrigins = [
   "https://groceryapp-frontend-yxdr.vercel.app",
   "http://localhost:5173",
 ];
 
-// ✅ USE CORS ONLY ONCE
 app.use(
   cors({
     origin: (origin, callback) => {
@@ -168,7 +165,6 @@ app.use(
 app.use(cookieParser());
 app.use(express.json());
 
-// Routes
 app.use("/images", express.static("uploads"));
 app.use("/api/user", userRoutes);
 app.use("/api/seller", sellerRoutes);
@@ -184,32 +180,6 @@ app.get("/", (req, res) => {
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   connectDB();
-  console.log(`Server is running on port ${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
