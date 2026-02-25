@@ -82,7 +82,7 @@ import orderRoutes from "./routes/order.routes.js";
 dotenv.config();
 
 const app = express();
-
+app.set('trust proxy', 1);
 await connectCloudinary();
 
 const allowedOrigins = [
