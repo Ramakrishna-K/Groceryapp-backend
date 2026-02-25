@@ -13,11 +13,11 @@ const updateOrderStatuses = async () => {
     for (let order of orders) {
       const age = now - new Date(order.createdAt).getTime();
 
-      if (age >= 2 * 60 * 10 && order.status !== "Delivered") {
+      if (age >= 2 * 60 * 1000 && order.status !== "Delivered") {
         order.status = "Delivered";
         await order.save();
         console.log(`Order ${order._id} marked as Delivered`);
-      } else if (age >= 1 * 60 * 10 && order.status !== "Order Placed") {
+      } else if (age >= 1 * 60 * 1000 && order.status !== "Order Placed") {
         order.status = "Order Placed"; // Confirmed
         await order.save();
         console.log(`Order ${order._id} marked as Order Placed`);
@@ -29,7 +29,7 @@ const updateOrderStatuses = async () => {
 };
 
 // Run every 1 minute
-setInterval(updateOrderStatuses, 60 * 10);
+setInterval(updateOrderStatuses, 60 * 1000);
 
 // ===============================
 // Place order COD: /api/order/place
