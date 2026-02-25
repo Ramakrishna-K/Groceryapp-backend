@@ -87,7 +87,7 @@
 // middleware/sellerAuth.js
 import jwt from "jsonwebtoken";
 
-export const sellerAuth = (req, res, next) => {
+export const authSeller = (req, res, next) => {
   try {
     const token = req.cookies?.sellerToken;
 
@@ -107,7 +107,7 @@ export const sellerAuth = (req, res, next) => {
 
     next();
   } catch (error) {
-    console.error("sellerAuth error:", error.message);
+    console.error("authSeller error:", error.message);
     return res.status(401).json({
       success: false,
       message: "Invalid or expired seller token",
