@@ -21,55 +21,23 @@
 
 
 
-import jwt from "jsonwebtoken";
-
-const authUser = (req, res, next) => {
-  const token = req.cookies.token;
-
-  if (!token) {
-    return res.status(401).json({
-      success: false,
-      message: "Unauthorized: No token",
-    });
-  }
-
-  try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = decoded;
-    next();
-  } catch (error) {
-    return res.status(401).json({
-      success: false,
-      message: "Unauthorized: Invalid token",
-    });
-  }
-};
-
-export default authUser;
-
-
-
 // import jwt from "jsonwebtoken";
 
 // const authUser = (req, res, next) => {
+//   const token = req.cookies.token;
+
+//   if (!token) {
+//     return res.status(401).json({
+//       success: false,
+//       message: "Unauthorized: No token",
+//     });
+//   }
+
 //   try {
-//     const token = req.cookies?.token;
-
-//     if (!token) {
-//       return res.status(401).json({
-//         success: false,
-//         message: "Unauthorized: No token",
-//       });
-//     }
-
 //     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
-//     // ✅ Standardized: always set req.user = { id: ... }
-//     req.user = { id: decoded.id };
-
+//     req.user = decoded;
 //     next();
 //   } catch (error) {
-//     console.error("authUser error:", error.message);
 //     return res.status(401).json({
 //       success: false,
 //       message: "Unauthorized: Invalid token",
@@ -80,6 +48,32 @@ export default authUser;
 // export default authUser;
 
 
+import jwt from "jsonwebtoken";
 
+const authUser = (req, res, next) => {
+  try {
+    const token = req.cookies?.token;
 
+    if (!token) {
+      return res.status(401).json({
+        success: false,
+        message: "Unauthorized: No token",
+      });
+    }
 
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+    // ✅ Store ONLY user ID
+    req.user = decoded.id;
+
+    next();
+  } catch (error) {
+    console.error("Auth error:", error.message);
+    return res.status(401).json({
+      success: false,
+      message: "Unauthorized: Invalid token",
+    });
+  }
+};
+
+export default authUser;
