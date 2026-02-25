@@ -18,39 +18,67 @@
 // export default authUser;
 
 
-// authUser.js
+// // authUser.js
+// import jwt from "jsonwebtoken";
+
+// const authUser = async (req, res, next) => {
+//   try {
+//     // MUST match the name used in res.cookie ("token")
+//     const { token } = req.cookies;
+
+//     if (!token) {
+//       return res
+//         .status(401)
+//         .json({ success: false, message: "Not Authorized, Login Again" });
+//     }
+
+//     // Verify the token
+//     const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+//     // 1. Attach to req.user (Used by your checkAuth controller)
+//     req.user = decoded.id;
+
+//     // 2. Attach to req.body.userId (Used by your cart controller as requested)
+//     req.body.userId = decoded.id;
+
+//     next();
+//   } catch (error) {
+//     console.error("Error in authUser middleware:", error);
+//     return res
+//       .status(401)
+//       .json({ success: false, message: "Session Expired" });
+//   }
+// };
+
+
 import jwt from "jsonwebtoken";
 
-const authUser = async (req, res, next) => {
+const authUser = (req, res, next) => {
+  const token = req.cookies.token;
+
+  if (!token) {
+    return res.status(401).json({
+      success: false,
+      message: "Unauthorized: No token",
+    });
+  }
+
   try {
-    // MUST match the name used in res.cookie ("token")
-    const { token } = req.cookies;
-
-    if (!token) {
-      return res
-        .status(401)
-        .json({ success: false, message: "Not Authorized, Login Again" });
-    }
-
-    // Verify the token
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
-    // 1. Attach to req.user (Used by your checkAuth controller)
-    req.user = decoded.id;
-
-    // 2. Attach to req.body.userId (Used by your cart controller as requested)
-    req.body.userId = decoded.id;
-
+    req.user = decoded;
     next();
   } catch (error) {
-    console.error("Error in authUser middleware:", error);
-    return res
-      .status(401)
-      .json({ success: false, message: "Session Expired" });
+    return res.status(401).json({
+      success: false,
+      message: "Unauthorized: Invalid token",
+    });
   }
 };
 
 export default authUser;
+
+
+// export default authUser;
 
 
 
