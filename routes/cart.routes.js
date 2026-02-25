@@ -6,20 +6,16 @@
 // router.put("/update", authUser, updateCart);
 // export default router;
 
-// cart.routes.js
+
+
 import express from "express";
-import { updateCart } from "../controllers/cart.controller.js";
-import authUser from "../middleware/authUser.js";
+// Double check: Is your folder "controllers" or "controller"?
+import { updateCart } from "../controllers/cart.controller.js"; 
+// Double check: Is your folder "middleware" or "middlewares"?
+import authUser from "../middleware/authUser.js"; 
 
 const cartRouter = express.Router();
 
-/**
- * Route: PUT /api/cart/update
- * Middleware: authUser (extracts token from cookie and adds userId to req.body)
- * Controller: updateCart (handles the database logic)
- */
 cartRouter.put("/update", authUser, updateCart);
 
 export default cartRouter;
-
-
