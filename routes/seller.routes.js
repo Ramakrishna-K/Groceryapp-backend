@@ -20,6 +20,7 @@ import {
   sellerLogout,
   checkAuth,
 } from "../controller/seller.controller.js";
+// import { authSeller } from "../middlewares/authSeller.js";
 import { authSeller } from "../middlewares/authSeller.js";
 
 const router = express.Router();
